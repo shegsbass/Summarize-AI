@@ -6,10 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.shegs.summarizeai.ui.screens.MainScreen
 import com.shegs.summarizeai.ui.theme.SummarizeAITheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +21,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    val navController = rememberNavController()
+                    MainScreen(navController)
                 }
             }
         }
@@ -30,35 +30,47 @@ class MainActivity : ComponentActivity() {
 }
 
 fun main(){
-    val apiKey = " "
+    val apiKey = ""
 
     val summarizationFunction = SummarizationFunction()
 
     val inputText = """
-        I recently worked on a project that had a significant impact on the teams involved in the HNG internship (Mobile track).
+        The success of your business may depend on improving the satisfaction of your internal customers.
 
-Within the last 48 hours, I had the privilege of developing an Android Authentication Library using Kotlin. The motivation behind the library was simple: multiple teams were repeatedly building the same authentication logic. It only made sense to create a reusable library that could streamline this process for everyone. 
+Now you will say Ajoke you have come again. Which one is internal customers again.
 
-I harnessed the power of Kotlin to create a versatile Android authentication library that seamlessly communicates with the backend API. This library handles user authentication, token management, and all the intricacies that come with it.
+Every business have two types of customers,
 
-To make the library easily accessible to all teams, I hosted it on JitPack. This decision simplified the integration process and ensured that updates and improvements were readily available to everyone.
+The internal customer and external customer.
 
-The process of writing this module in Android Studio was a rewarding experience. I collaborated closely with team members to identify the common authentication requirements and fine-tuned the library accordingly. I also wrote well-detailed documentation on how to use the library on GitHub. It was a true testament to the power of teamwork and open communication. 
+Now who are these people?
 
-The most gratifying part of this journey was seeing the entire team adopt and integrate the library into their respective projects. Choi... It brought smiles to my face because I could see that the library streamlined the development process, reduced redundancy, and allowed the teams to focus on what truly matters: delivering exceptional user experiences.
+We are all very conscious about our external customers, they are the people that use our products or services.
 
-Really, being a software developer is much more than just writing code; it's the art of solving problems and providing solutions.
+But what about the internal customers?
+
+These are your coworkers, team members, stakeholders and staff of our businesses. They're the backbone of our organizations, and satisfying them is an integral part of your sales strategy.
+
+Here are some tips to satisfying Internal customers
+
+1️⃣ Effective Communication: Open, honest, and transparent communication is very important. Encourage dialogue, active listening, and the freedom to express ideas and concerns.
+
+2️⃣ Empowerment and Trust: Empower your employees with responsibilities and trust their judgment. When individuals feel trusted, they are motivated to perform their best.
+
+3️⃣Respecting Their Office: Acknowledge and respect the workspace of your employees. Do not teach them how to do their jobs and also don't interfere in their space
+
+4️⃣Recognition and Appreciation: Acknowledge hard work and achievements. A simple 'thank you' or public recognition can go a long way in boosting morale and job satisfaction.
+
+5️⃣Professional Development: Invest in the growth of your employees. Offer training, workshops, and mentorship programs that enhance their skills and confidence. Also make them a part of your decision makers
+
+6️⃣ Constructive Feedback: Provide feedback that is specific, constructive, and actionable. Employees need to know where they stand and how they can improve.
+
+By nurturing a supportive, empowering, and respectful internal culture, your business can soar to new heights.
+
+Which of these tips do you agree with, comment down below.
+
+I am Ajoke Yusuf. Revealing the secrets and spilling the hard truth about retention . I am on a mission to transform businesses by building outstanding, strong customer-interfacing teams.
     """
 
     summarizationFunction.summarizeText(apiKey, inputText)
-}
-
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    SummarizeAITheme {
-
-    }
 }
