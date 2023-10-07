@@ -88,12 +88,6 @@ fun MainScreen(
     }
 }
 
-
-@Composable
-fun HomeScreen() {
-    CenterText(text = "Home")
-}
-
 @Composable
 fun HistoryScreen() {
     CenterText(text = "History")

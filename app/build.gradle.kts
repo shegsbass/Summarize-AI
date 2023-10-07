@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.shegs.summarizeai"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.shegs.summarizeai"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -68,6 +68,8 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha10")
+
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.33.2-alpha")
 
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
