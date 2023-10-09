@@ -17,62 +17,72 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 
 @Composable
 fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         NavigationItem.Home,
         NavigationItem.Profile,
-        NavigationItem.History
+        NavigationItem.ResultScreen,
+        NavigationItem.History,
     )
-    var selectedItem by remember { mutableStateOf(0) }
-    var currentRoute by remember { mutableStateOf(NavigationItem.Home.route) }
 
-    items.forEachIndexed { index, navigationItem ->
-        if (navigationItem.route == currentRoute) {
-            selectedItem = index
-        }
-    }
+    val navBackStackEntry = navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry.value?.destination?.route
 
-    NavigationBar(
-        containerColor = Color.White,
-        tonalElevation = 2.dp
-    ) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = Color(0xFF11775E),
-                    unselectedIconColor = Color.Gray,
-                    selectedTextColor = Color.Black,
-                    indicatorColor = Color.White
-                ),
-                modifier = Modifier,
-                alwaysShowLabel = true,
-                icon = {
-                    item.icon?.let { // Check if the icon is not null
-                        Icon(it, contentDescription = item.title)
-                    }
-                       },
-                label = {
-                    Text(item.title)
-                        },
-                selected = selectedItem == index,
-                onClick = {
-                    if (item != NavigationItem.Profile) {
-                        selectedItem = index
-                        currentRoute = item.route
-                        navController.navigate(item.route) {
-                            navController.graph.startDestinationRoute?.let { route ->
-                                popUpTo(route) {
-                                    saveState = true
-                                }
+    // Only show the bottom nav bar when the current route is one of the bottom nav destinations
+    val bottomBarDestination = items.any { it.route == currentRoute }
+
+    if (bottomBarDestination) {
+        NavigationBar(
+            containerColor = Color.White,
+            tonalElevation = 2.dp
+        ) {
+            items.forEach { screen ->
+                val selected = screen.route == currentRoute
+                NavigationBarItem(
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = Color(0xFF11775E),
+                        unselectedIconColor = Color.Gray,
+                        selectedTextColor = Color.Black,
+                        indicatorColor = Color.White
+                    ),
+                    modifier = Modifier,
+                    alwaysShowLabel = true,
+                    icon = {
+                        screen.icon?.let { // Check if the icon is not null
+                            Icon(it, contentDescription = screen.title)
+                        }
+                    },
+                    label = {
+                        Text(screen.title ?: "")
+                    },
+                    selected = selected,
+                    onClick = {
+                        if (screen == NavigationItem.Home) {
+                            // If it's the Home icon, navigate to the Home screen
+                            navController.navigate(NavigationItem.Home.route) {
+                                // Configure navigation options as needed
                             }
-                        launchSingleTop = true
-                        restoreState = true
+                        } else {
+                            // Handle navigation for other items
+                            navController.navigate(screen.route) {
+                                // Configure navigation options as needed
+                            }
+                        }
+                        /*navController.navigate(screen.route) {
+                            popUpTo(NavigationItem.Home.route) {
+                                saveState = true
+                            }
+                            // Handles instances when the destination is already at the top of the stack.
+                            launchSingleTop = true
+                            restoreState = true
+                        }*/
+
                     }
-                }
-                }
-            )
+                )
+            }
         }
     }
 }

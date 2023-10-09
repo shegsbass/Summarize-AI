@@ -1,5 +1,9 @@
 package com.shegs.summarizeai.ui.screens
 
+import android.annotation.SuppressLint
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -19,6 +23,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -39,31 +44,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.shegs.summarizeai.R
 import com.shegs.summarizeai.navigation.TopAppBar
 import com.shegs.summarizeai.ui.screens.common.GradientButton
 import com.shegs.summarizeai.ui.screens.common.TitleText
 
-@Preview
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SummarizerScreen() {
-    TopAppBar(
-        text = "Summarize"
-    )
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 34.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
+fun SummarizerScreen(navController: NavController) {
+        TopAppBar(text = "Summarize")
 
-        SummarizerTitle()
-        AiGreeting()
-        TextInputSection()
-        SummarizeButton()
-    }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 34.dp),
+                verticalArrangement = Arrangement.Center
+            ) {
+                SummarizerTitle()
+                AiGreeting()
+                TextInputSection()
+                SummarizeButton(navController)
+            }
+
 }
 
 @Composable
@@ -71,8 +78,13 @@ fun SummarizerTitle() {
     TitleText(text = "Text Summarizer")
 }
 
+
 @Composable
 fun AiGreeting() {
+
+    var visibility by remember { mutableStateOf(true) }
+    val greetingText = "Hi, I can help you summarize."
+
     Row(
         modifier = Modifier
             .padding(top = 26.dp, bottom = 26.dp)
@@ -84,38 +96,38 @@ fun AiGreeting() {
                 .width(23.dp)
                 .height(23.dp),
         )
-        
+
         Spacer(modifier = Modifier.width(14.dp))
 
-            Card(
-                modifier = Modifier
-                    .width(242.dp)
-                    .height(28.dp),
-                shape = RoundedCornerShape(8.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = Color(0xFFE2F9ED),
-                    contentColor = Color(0xFF000000)
-                )
+        Card(
+            modifier = Modifier
+                .width(242.dp)
+                .height(45.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = Color(0xFFE2F9ED),
+                contentColor = Color(0xFF000000)
+            )
+        ) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.CenterStart
             ) {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.CenterStart
-                ) {
-                    Text(
-                        text = "Hi, I can help you summarize.",
-                        style = TextStyle(
-                            fontSize = 14.sp,
-                            fontFamily = FontFamily(Font(R.font.inter_regular)),
-                            fontWeight = FontWeight(400),
-                            color = Color(0xFF000000),
-                        ),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier
-                            .padding(start = 12.dp)
-                    )
-                }
+                Text(
+                    text = greetingText,
+                    style = TextStyle(
+                        fontSize = 14.sp,
+                        fontFamily = FontFamily(Font(R.font.inter_regular)),
+                        fontWeight = FontWeight(400),
+                        color = Color(0xFF000000),
+                    ),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .padding(start = 12.dp)
+                )
             }
+        }
     }
 }
 
@@ -137,12 +149,12 @@ fun TextInputSection(
             text = newText
         },
         placeholder = {
-                      Text(
-                          text = "Original Text",
-                          fontSize = 12.sp,
-                          fontFamily = FontFamily(Font(R.font.inter_medium)),
-                          fontWeight = FontWeight(600)
-                      )
+            Text(
+                text = "Original Text",
+                fontSize = 12.sp,
+                fontFamily = FontFamily(Font(R.font.inter_medium)),
+                fontWeight = FontWeight(600)
+            )
         },
         modifier = modifier
             .fillMaxWidth()
@@ -154,7 +166,7 @@ fun TextInputSection(
             fontSize = 12.sp,
             fontFamily = FontFamily(Font(R.font.inter_regular)),
             fontWeight = FontWeight(400)
-            ),
+        ),
         keyboardOptions = KeyboardOptions.Default.copy(
             keyboardType = KeyboardType.Text
         ),
@@ -169,13 +181,15 @@ fun TextInputSection(
 }
 
 @Composable
-fun SummarizeButton() {
+fun SummarizeButton(navController: NavController) {
     Column(
         modifier = Modifier,
         verticalArrangement = Arrangement.Center,
     ) {
         GradientButton(
-            onClick = {},
+            onClick = {
+                    navController.navigate("resultScreen")
+            },
             shape = RoundedCornerShape(10.dp),
             text = "Summarize"
         )

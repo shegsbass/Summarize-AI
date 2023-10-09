@@ -3,6 +3,7 @@ package com.shegs.summarizeai.navigation
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -30,19 +31,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.shegs.summarizeai.R
 
-@Preview
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(text: String) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
-    Scaffold(
-        modifier = Modifier
-            .nestedScroll(scrollBehavior.nestedScrollConnection)
-            .padding(horizontal = 17.dp),
-        topBar = {
             CenterAlignedTopAppBar(
+                modifier = Modifier.padding(horizontal = 17.dp),
                 colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                     containerColor = Color.White,
                     titleContentColor = Color.Black
@@ -80,9 +77,3 @@ fun TopAppBar(text: String) {
                 scrollBehavior = scrollBehavior
             )
         }
-    ) {
-
-
-    }
-
-}

@@ -1,11 +1,14 @@
 package com.shegs.summarizeai
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
@@ -13,13 +16,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.shegs.summarizeai.navigation.AppNavigation
+import com.shegs.summarizeai.navigation.BottomNavigationBar
 import com.shegs.summarizeai.ui.screens.MainScreen
+import com.shegs.summarizeai.ui.screens.ResultScreen
 import com.shegs.summarizeai.ui.theme.SummarizeAITheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             SummarizeAITheme {
                 SetStatusBarColor(color = Color(0xFFFFFFFF))
                 // A surface container using the 'background' color from the theme
@@ -27,8 +36,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
-                    MainScreen(navController)
+
+                    Scaffold(
+                        bottomBar = {
+                            BottomNavigationBar(navController)
+                        }
+                    ) {
+                        AppNavigation(navController = navController)
+                    }
+
+                    //ResultScreen(navController)
+                    //MainScreen()
+                    //AppNavigation(navController = navController)
                 }
             }
         }

@@ -6,20 +6,31 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.shegs.summarizeai.ui.screens.HistoryScreen
 import com.shegs.summarizeai.ui.screens.HomeScreen
-import com.shegs.summarizeai.ui.screens.MainScreen
-import com.shegs.summarizeai.ui.screens.ProfileScreen
+import com.shegs.summarizeai.ui.screens.ResultScreen
+import com.shegs.summarizeai.ui.screens.SummarizerScreen
 
 @Composable
-fun AppNavigations(navController: NavHostController) {
+fun AppNavigation(navController: NavHostController) {
+
+
+
+
     NavHost(navController, startDestination = NavigationItem.Home.route) {
         composable(NavigationItem.Home.route) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(NavigationItem.History.route) {
             HistoryScreen()
+        }
+        composable(NavigationItem.SummarizeScreen.route){
+            SummarizerScreen(navController)
+        }
+        composable(NavigationItem.ResultScreen.route){
+            ResultScreen()
         }
 //        composable(NavigationItem.Profile.route) {
 //            ProfileScreen()
 //        }
     }
 }
+

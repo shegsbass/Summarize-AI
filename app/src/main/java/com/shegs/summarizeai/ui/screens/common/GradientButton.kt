@@ -8,6 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -34,7 +38,10 @@ fun GradientButton(
         color = Color.White,
         fontFamily = FontFamily(Font(R.font.inter_regular))
     ),
-    text: String
+    text: String? = null,
+    imageVector: ImageVector? = null,
+    contentDescription: String? = null,
+    tint: Color? = null
 ) {
     val gradient = Brush.linearGradient(
         colors = listOf(Color(0xFF11775E),
@@ -50,10 +57,20 @@ fun GradientButton(
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = text,
-            style = textStyle
-        )
+        text?.let {
+            Text(
+                text = it,
+                style = textStyle
+            )
+        }
+        val iconTint = tint ?: Color.Unspecified
+        imageVector?.let {
+            Icon(
+                imageVector = it,
+                contentDescription = contentDescription ?: "",
+                tint = iconTint
+            )
+        }
     }
 }
 
