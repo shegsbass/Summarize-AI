@@ -29,13 +29,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.shegs.summarizeai.R
 
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopAppBar(text: String) {
+fun TopAppBar(text: String, navController: NavHostController) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
 
             CenterAlignedTopAppBar(
@@ -65,7 +66,10 @@ fun TopAppBar(text: String) {
                             )
                     ) {
                         IconButton(
-                            onClick = { /*TODO*/ }
+                            onClick = {
+                                // Navigate back when the back button is clicked
+                                navController.popBackStack()
+                            }
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.KeyboardArrowLeft,

@@ -26,7 +26,7 @@ fun AppNavigation(navController: NavHostController) {
             SummarizerScreen(navController)
         }
         composable(NavigationItem.ResultScreen.route){
-            ResultScreen()
+            ResultScreen(navController)
         }
 //        composable(NavigationItem.Profile.route) {
 //            ProfileScreen()

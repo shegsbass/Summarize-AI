@@ -30,6 +30,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.shegs.summarizeai.R
 import com.shegs.summarizeai.navigation.BottomNavigationBar
 import com.shegs.summarizeai.navigation.TopAppBar
@@ -40,8 +41,8 @@ import com.shegs.summarizeai.ui.screens.common.TitleText
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ResultScreen() {
-    TopAppBar(text = "Result")
+fun ResultScreen(navController: NavHostController) {
+    TopAppBar(text = "Result", navController = navController)
     Column(
         modifier = Modifier
             .fillMaxSize()

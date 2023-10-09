@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.shegs.summarizeai.R
 import com.shegs.summarizeai.navigation.TopAppBar
 import com.shegs.summarizeai.ui.screens.common.GradientButton
@@ -56,8 +57,8 @@ import com.shegs.summarizeai.ui.screens.common.TitleText
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SummarizerScreen(navController: NavController) {
-        TopAppBar(text = "Summarize")
+fun SummarizerScreen(navController: NavHostController) {
+        TopAppBar(text = "Summarize", navController = navController)
 
             Column(
                 modifier = Modifier
